@@ -82,28 +82,8 @@ def loadImages():
 
 playerSelections, colors = loadImages()
 
-
-class Player:
-    def __init__(self, color, size, model, selections):
-        self.color = color
-        self.model = model
-        self.size = size
-        self.img = selections[self.color][self.size][self.model]
-
-
-def renderTiles():
-    c = 0
-    tiles = [
-        pygame.transform.scale(
-            pygame.image.load("assets/Tiles/grass.png").convert_alpha(), (40, 40)
-        )
-    ] * (15**2)
-    for i in range(15):
-        x = i * 40
-        for j in range(15):
-            y = j * 40
-            screen.blit(tiles[c], (x, y))
-            c += 1
+from scripts.player import Player
+from scripts.background import renderTiles
 
 
 def renderCenterdText(text, yOffset=0):
@@ -121,7 +101,7 @@ def numToSize(num):
 
 
 def handleEvents():
-    global running, pressed
+    global running, pressed, screen
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -134,7 +114,7 @@ def handleEvents():
 
 
 def colorSelect():
-    global running, pressed
+    global running, pressed, screen
     while running:
         handleEvents()
         keys = pygame.key.get_pressed()
@@ -144,7 +124,7 @@ def colorSelect():
                 return i
 
         screen.fill((255, 255, 255))
-        renderTiles()
+        renderTiles(screen)
         renderCenterdText("Pick a color for your car", 200)
 
         positions = [(60, 300), (160, 300), (260, 300), (360, 300), (460, 300)]
@@ -158,7 +138,7 @@ def colorSelect():
 
 
 def modelSelect(color):
-    global running, pressed
+    global running, pressed, screen
     while running:
         handleEvents()
         screen.fill((255, 255, 255))
@@ -167,7 +147,7 @@ def modelSelect(color):
             if keys[pygame.K_0 + i] and not pressed:
                 pressed = True
                 return i
-        renderTiles()
+        renderTiles(screen)
         renderCenterdText("Pick a car model", 200)
 
         carImages = playerSelections[list(playerSelections.keys())[color - 1]]["big"]
@@ -184,7 +164,7 @@ def modelSelect(color):
 
 
 def sizeSelect(color, model):
-    global running, pressed
+    global running, pressed, screen
     while running:
         handleEvents()
         keys = pygame.key.get_pressed()
@@ -195,7 +175,7 @@ def sizeSelect(color, model):
             pressed = True
             return 2
 
-        renderTiles()
+        renderTiles(screen)
         renderCenterdText("Pick a size (big or small)", 200)
 
         positions = [(200, 300), (300, 300)]
