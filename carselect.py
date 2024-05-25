@@ -23,58 +23,58 @@ def loadImages():
     cars = {
         "black": {
             "big": [
-                pygame.image.load(f"Assets/Cars/car_black_{i}.png") for i in range(1, 6)
+                pygame.image.load(f"assets/Cars/car_black_{i}.png") for i in range(1, 6)
             ],
             "small": [
-                pygame.image.load(f"Assets/Cars/car_black_small_{i}.png")
+                pygame.image.load(f"assets/Cars/car_black_small_{i}.png")
                 for i in range(1, 6)
             ],
         },
         "blue": {
             "big": [
-                pygame.image.load(f"Assets/Cars/car_blue_{i}.png") for i in range(1, 6)
+                pygame.image.load(f"assets/Cars/car_blue_{i}.png") for i in range(1, 6)
             ],
             "small": [
-                pygame.image.load(f"Assets/Cars/car_blue_small_{i}.png")
+                pygame.image.load(f"assets/Cars/car_blue_small_{i}.png")
                 for i in range(1, 6)
             ],
         },
         "green": {
             "big": [
-                pygame.image.load(f"Assets/Cars/car_green_{i}.png") for i in range(1, 6)
+                pygame.image.load(f"assets/Cars/car_green_{i}.png") for i in range(1, 6)
             ],
             "small": [
-                pygame.image.load(f"Assets/Cars/car_green_small_{i}.png")
+                pygame.image.load(f"assets/Cars/car_green_small_{i}.png")
                 for i in range(1, 6)
             ],
         },
         "red": {
             "big": [
-                pygame.image.load(f"Assets/Cars/car_red_{i}.png") for i in range(1, 6)
+                pygame.image.load(f"assets/Cars/car_red_{i}.png") for i in range(1, 6)
             ],
             "small": [
-                pygame.image.load(f"Assets/Cars/car_red_small_{i}.png")
+                pygame.image.load(f"assets/Cars/car_red_small_{i}.png")
                 for i in range(1, 6)
             ],
         },
         "yellow": {
             "big": [
-                pygame.image.load(f"Assets/Cars/car_yellow_{i}.png")
+                pygame.image.load(f"assets/Cars/car_yellow_{i}.png")
                 for i in range(1, 6)
             ],
             "small": [
-                pygame.image.load(f"Assets/Cars/car_yellow_small_{i}.png")
+                pygame.image.load(f"assets/Cars/car_yellow_small_{i}.png")
                 for i in range(1, 6)
             ],
         },
     }
 
     colors = {
-        "black": pygame.image.load("Assets/colors/Black.png"),
-        "blue": pygame.image.load("Assets/colors/Blue.png"),
-        "red": pygame.image.load("Assets/colors/Orange.png"),
-        "green": pygame.image.load("Assets/colors/Green.png"),
-        "yellow": pygame.image.load("Assets/colors/Yellow.png"),
+        "black": pygame.image.load("assets/colors/Black.png"),
+        "blue": pygame.image.load("assets/colors/Blue.png"),
+        "red": pygame.image.load("assets/colors/Orange.png"),
+        "green": pygame.image.load("assets/colors/Green.png"),
+        "yellow": pygame.image.load("assets/colors/Yellow.png"),
     }
 
     return cars, colors
@@ -95,7 +95,7 @@ def renderTiles():
     c = 0
     tiles = [
         pygame.transform.scale(
-            pygame.image.load("Assets/Tiles/grass.png").convert_alpha(), (40, 40)
+            pygame.image.load("assets/Tiles/grass.png").convert_alpha(), (40, 40)
         )
     ] * (15**2)
     for i in range(15):
