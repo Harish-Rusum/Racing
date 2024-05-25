@@ -11,7 +11,7 @@ running = True
 pressed = False
 
 screen = pygame.display.set_mode((screenWidth, screenHeight))
-pygame.display.set_caption("Racing")
+pygame.display.set_caption("Car Select")
 
 # Imports
 from utils.TextEngine import textRender
@@ -83,7 +83,7 @@ def loadImages():
 playerSelections, colors = loadImages()
 
 from scripts.player import Player
-from scripts.background import renderTiles
+from scripts.tiles import backgroundRender
 
 
 def renderCenterdText(text, yOffset=0):
@@ -124,7 +124,7 @@ def colorSelect():
                 return i
 
         screen.fill((255, 255, 255))
-        renderTiles(screen)
+        backgroundRender(screen)
         renderCenterdText("Pick a color for your car", 200)
 
         positions = [(60, 300), (160, 300), (260, 300), (360, 300), (460, 300)]
@@ -147,7 +147,7 @@ def modelSelect(color):
             if keys[pygame.K_0 + i] and not pressed:
                 pressed = True
                 return i
-        renderTiles(screen)
+        backgroundRender(screen)
         renderCenterdText("Pick a car model", 200)
 
         carImages = playerSelections[list(playerSelections.keys())[color - 1]]["big"]
@@ -175,7 +175,7 @@ def sizeSelect(color, model):
             pressed = True
             return 2
 
-        renderTiles(screen)
+        backgroundRender(screen)
         renderCenterdText("Pick a size (big or small)", 200)
 
         positions = [(200, 300), (300, 300)]
@@ -192,8 +192,10 @@ def sizeSelect(color, model):
         clock.tick(fps)
 
 
-color = colorSelect()
-model = modelSelect(color)
-size = sizeSelect(color, model)
-player = Player(numToColor(color), numToSize(size), model, playerSelections)
-pygame.quit()
+def select():
+    color = colorSelect()
+    model = modelSelect(color)
+    size = sizeSelect(color, model)
+    player = Player(numToColor(color), numToSize(size), model, playerSelections)
+    pygame.quit()
+    return player
