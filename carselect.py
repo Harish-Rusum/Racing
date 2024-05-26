@@ -72,8 +72,8 @@ def loadImages():
     colors = {
         "black": pygame.image.load("assets/colors/Black.png"),
         "blue": pygame.image.load("assets/colors/Blue.png"),
-        "red": pygame.image.load("assets/colors/Orange.png"),
         "green": pygame.image.load("assets/colors/Green.png"),
+        "red": pygame.image.load("assets/colors/Orange.png"),
         "yellow": pygame.image.load("assets/colors/Yellow.png"),
     }
 

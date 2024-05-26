@@ -2,7 +2,7 @@ import pygame
 import sys
 from carselect import select
 
-select()
+player = select()
 
 pygame.init()
 
@@ -36,12 +36,17 @@ def handleEvents():
                 pressed = False
 
 
+playerX = 0
+playerY = 0
+
 while running:
     handleEvents()
 
     screen.fill((0, 0, 0))  # Clear the screen
     backgroundRender(screen)
     trackRender(screen)
+
+    player.render(playerX, playerY, screen)
 
     pygame.display.flip()
     clock.tick(fps)
