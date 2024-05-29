@@ -196,6 +196,6 @@ def select():
     color = colorSelect()
     model = modelSelect(color)
     size = sizeSelect(color, model)
-    player = Player(numToColor(color), numToSize(size), model, playerSelections)
+    player = Player(numToColor(color), numToSize(size), model, playerSelections,280,530)
     pygame.quit()
     return player
