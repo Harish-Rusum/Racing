@@ -12,6 +12,7 @@ class Car:
         self.color = random.choice(["black", "green", "red", "blue", "yellow"])
         self.model = random.choice([0, 1, 2, 3, 4])
         self.size = random.choice(["big", "small"])
+        self.collidedWith = False
 
         while (
             self.color == player.color

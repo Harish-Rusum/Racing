@@ -22,7 +22,6 @@ from scripts.lane import Lane
 from scripts.tiles import backgroundRender
 from scripts.tiles import trackRender
 
-
 from utils.TextEngine import textRender
 from utils.CenteringEngine import centerImageX
 
@@ -41,31 +40,33 @@ def handleEvents():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_l or event.key == pygame.K_d:
+            elif event.key in (pygame.K_l, pygame.K_d):
                 if not pressed:
                     player.right()
                     pressed = True
-            if event.key == pygame.K_h or event.key == pygame.K_a:
+            elif event.key in (pygame.K_h, pygame.K_a):
                 if not pressed:
                     player.left()
                     pressed = True
-            if event.key == pygame.K_k or event.key == pygame.K_w:
+            elif event.key in (pygame.K_k, pygame.K_w):
                 if not pressed:
                     player.up()
                     pressed = True
-            if event.key == pygame.K_j or event.key == pygame.K_s:
+            elif event.key in (pygame.K_j, pygame.K_s):
                 if not pressed:
                     player.down()
                     pressed = True
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_l or event.key == pygame.K_d:
-                pressed = False
-            if event.key == pygame.K_h or event.key == pygame.K_a:
-                pressed = False
-            if event.key == pygame.K_j or event.key == pygame.K_w:
-                pressed = False
-            if event.key == pygame.K_k or event.key == pygame.K_s:
+            if event.key in (
+                pygame.K_l,
+                pygame.K_d,
+                pygame.K_h,
+                pygame.K_a,
+                pygame.K_j,
+                pygame.K_w,
+                pygame.K_k,
+                pygame.K_s,
+            ):
                 pressed = False
 
 
@@ -85,39 +86,55 @@ cars = []
 spawnRate = 40
 time = 0
 score = 0
+highScore = 0
 
 plaque = pygame.image.load("assets/tiles/plaque.png")
 
-while running:
-    handleEvents()
 
-    screen.fill((0, 0, 0))
-    backgroundRender(screen)
-    trackRender(screen)
+def main():
+    global time, score, cars, running, highScore
+    while running:
+        handleEvents()
 
-    cars = [car for car in cars if car.notOffScreen]
-    for i in range(len(cars)):
-        car = cars[i]
-        if car.notOffScreen:
-            car.update()
-            car.render(screen)
+        screen.fill((0, 0, 0))
+        backgroundRender(screen)
+        trackRender(screen)
 
-    player.render(screen)
+        cars = [car for car in cars if car.notOffScreen]
+        for car in cars:
+            if car.notOffScreen:
+                car.update()
+                car.render(screen)
 
-    if time % spawnRate == 0:
-        for i in range(len(lanes)):
-            if random.choice(["yes", "no"]) == "yes":
-                cars.append(Car(playerSelections, lanes[i], player))
+        player.render(screen)
 
-    if time % fps == 0:
-        score += 1
+        if time % spawnRate == 0:
+            for lane in lanes:
+                if random.choice(["yes", "no"]) == "yes":
+                    cars.append(Car(playerSelections, lane, player))
 
-    screen.blit(plaque, (0, 0))
-    renderCenterdText(str(score), 40, 25)
+        if time % fps == 0:
+            score += 1
+            highScore = max(score, highScore)
+        for car in cars:
+            if car.rect.colliderect(player.rect):
+                if not car.collidedWith:
+                    score -= 2
+                    car.collidedWith = True
+            else:
+                car.collidedWith = False
 
-    time = time + 1 % 1000000
-    pygame.display.flip()
-    clock.tick(fps)
+        if score < 0:
+            print(highScore)
+            running = False
+        screen.blit(plaque, (0, 0))
+        renderCenterdText(str(score), 40, 25)
 
+        time = (time + 1) % 1000000
+        pygame.display.flip()
+        clock.tick(fps)
+
+
+main()
 pygame.quit()
 sys.exit()

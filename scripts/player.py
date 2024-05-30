@@ -30,3 +30,4 @@ class Player:
 
     def scale(self):
         self.img = pygame.transform.smoothscale(self.img, (40, 62))
+        self.rect = self.img.get_rect()
