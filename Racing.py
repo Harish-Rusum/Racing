@@ -2,7 +2,7 @@ import pygame
 import sys
 from carselect import select
 
-player = select()
+player,playerSelections = select()
 
 pygame.init()
 
@@ -16,7 +16,9 @@ pressed = False
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Racing")
 
-# from scripts.player import Player
+from scripts.player import Player
+from scripts.enemy import Car
+from scripts.lane import Lane
 from scripts.tiles import backgroundRender
 from scripts.tiles import trackRender
 
@@ -40,11 +42,11 @@ def handleEvents():
                     pressed = True
             if event.key == pygame.K_k:
                 if not pressed:
-                    player.up()
+                    player.down()
                     pressed = True
             if event.key == pygame.K_j:
                 if not pressed:
-                    player.down()
+                    player.up()
                     pressed = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_l:
@@ -55,16 +57,48 @@ def handleEvents():
                 pressed = False
             if event.key == pygame.K_k:
                 pressed = False
+
+
 player.scale()
+
+lanes = [
+    Lane(False,100),
+    Lane(False,160),
+    Lane(False,220),
+    Lane(True,280),
+    Lane(False,340),
+    Lane(False,400),
+    Lane(False,460),
+]
+
+cars = [
+    Car(playerSelections,lanes[0]),
+    Car(playerSelections,lanes[1]),
+    Car(playerSelections,lanes[2]),
+    Car(playerSelections,lanes[3]),
+    Car(playerSelections,lanes[4]),
+    Car(playerSelections,lanes[5]),
+    Car(playerSelections,lanes[6]),
+]
+for car in cars:
+    car.pick(player)
+    car.scale()
 
 while running:
     handleEvents()
 
-    screen.fill((0, 0, 0))  # Clear the screen
+    screen.fill((0, 0, 0))
     backgroundRender(screen)
     trackRender(screen)
 
     player.render(screen)
+    
+    for i in range(len(cars)):
+        car = cars[i]
+        if car.notOffScreen:
+            car.update()
+            car.render(screen)
+
 
     pygame.display.flip()
     clock.tick(fps)

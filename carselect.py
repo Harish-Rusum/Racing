@@ -193,9 +193,10 @@ def sizeSelect(color, model):
 
 
 def select():
+    global playerSlections
     color = colorSelect()
     model = modelSelect(color)
     size = sizeSelect(color, model)
     player = Player(numToColor(color), numToSize(size), model, playerSelections,280,530)
     pygame.quit()
-    return player
+    return player,playerSelections
