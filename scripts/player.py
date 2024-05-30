@@ -22,5 +22,11 @@ class Player:
     def left(self):
         self.x = max(self.x - 60, 100)
 
+    def up(self):
+        self.y = min(self.y + 60, 530)
+
+    def down(self):
+        self.y = max(self.y - 60, 60)
+
     def scale(self):
         self.img = pygame.transform.smoothscale(self.img, (40, 62))
