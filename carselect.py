@@ -87,7 +87,7 @@ from scripts.tiles import backgroundRender
 
 
 def renderCenterdText(text, yOffset=0):
-    textSurf = textRender(text, (0, 0, 0),14)
+    textSurf = textRender(text, (0, 0, 0), 14)
     textX, textY = centerImageX(textSurf, screen, yOffset)
     screen.blit(textSurf, (textX, textY))
 
@@ -130,7 +130,7 @@ def colorSelect():
         positions = [(60, 300), (160, 300), (260, 300), (360, 300), (460, 300)]
         for curNumber, colorKey in enumerate(colors.keys(), start=1):
             screen.blit(colors[colorKey], positions[curNumber - 1])
-            numberText = textRender(str(curNumber), (0, 0, 0),14)
+            numberText = textRender(str(curNumber), (0, 0, 0), 14)
             screen.blit(numberText, (positions[curNumber - 1][0] + 33, 390))
 
         pygame.display.flip()
@@ -156,7 +156,7 @@ def modelSelect(color):
 
         positions = [(50, 300), (150, 300), (250, 300), (350, 300), (450, 300)]
         for curNumber in range(5):
-            numberText = textRender(str(curNumber + 1), (0, 0, 0),14)
+            numberText = textRender(str(curNumber + 1), (0, 0, 0), 14)
             screen.blit(numberText, (positions[curNumber][0] + 33, 390))
 
         pygame.display.flip()
@@ -176,7 +176,7 @@ def sizeSelect(color, model):
             return 2
 
         backgroundRender(screen)
-        renderCenterdText("Pick a size (big or small)", 200)
+        renderCenterdText("Pick a level of detail", 200)
 
         positions = [(200, 300), (300, 300)]
         carOpts = [
@@ -185,8 +185,8 @@ def sizeSelect(color, model):
         ]
         screen.blit(carOpts[0], (positions[0][0], positions[0][1]))
         screen.blit(carOpts[1], (positions[1][0], positions[1][1]))
-        screen.blit(textRender("1", (0, 0, 0),14), (230, 450))
-        screen.blit(textRender("2", (0, 0, 0),14), (320, 450))
+        screen.blit(textRender("1", (0, 0, 0), 14), (230, 450))
+        screen.blit(textRender("2", (0, 0, 0), 14), (320, 450))
 
         pygame.display.flip()
         clock.tick(fps)
@@ -197,6 +197,8 @@ def select():
     color = colorSelect()
     model = modelSelect(color)
     size = sizeSelect(color, model)
-    player = Player(numToColor(color), numToSize(size), model, playerSelections,280,530)
+    player = Player(
+        numToColor(color), numToSize(size), model, playerSelections, 280, 530
+    )
     pygame.quit()
-    return player,playerSelections
+    return player, playerSelections

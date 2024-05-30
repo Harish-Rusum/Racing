@@ -17,7 +17,6 @@ pressed = False
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Racing")
 
-from scripts.player import Player
 from scripts.enemy import Car
 from scripts.lane import Lane
 from scripts.tiles import backgroundRender
@@ -53,11 +52,11 @@ def handleEvents():
                     pressed = True
             if event.key == pygame.K_k or event.key == pygame.K_w:
                 if not pressed:
-                    player.down()
+                    player.up()
                     pressed = True
             if event.key == pygame.K_j or event.key == pygame.K_s:
                 if not pressed:
-                    player.up()
+                    player.down()
                     pressed = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_l or event.key == pygame.K_d:
@@ -112,10 +111,9 @@ while running:
 
     if time % fps == 0:
         score += 1
-    
-    screen.blit(plaque,(0,0))
-    renderCenterdText(str(score), 40,25)
 
+    screen.blit(plaque, (0, 0))
+    renderCenterdText(str(score), 40, 25)
 
     time = time + 1 % 1000000
     pygame.display.flip()
