@@ -2,7 +2,7 @@ import pygame
 import sys
 from carselect import select
 
-player,playerSelections = select()
+player, playerSelections = select()
 
 pygame.init()
 
@@ -62,23 +62,23 @@ def handleEvents():
 player.scale()
 
 lanes = [
-    Lane(False,100),
-    Lane(False,160),
-    Lane(False,220),
-    Lane(True,280),
-    Lane(False,340),
-    Lane(False,400),
-    Lane(False,460),
+    Lane(False, 100),
+    Lane(False, 160),
+    Lane(False, 220),
+    Lane(True, 280),
+    Lane(False, 340),
+    Lane(False, 400),
+    Lane(False, 460),
 ]
 
 cars = [
-    Car(playerSelections,lanes[0]),
-    Car(playerSelections,lanes[1]),
-    Car(playerSelections,lanes[2]),
-    Car(playerSelections,lanes[3]),
-    Car(playerSelections,lanes[4]),
-    Car(playerSelections,lanes[5]),
-    Car(playerSelections,lanes[6]),
+    Car(playerSelections, lanes[0]),
+    Car(playerSelections, lanes[1]),
+    Car(playerSelections, lanes[2]),
+    Car(playerSelections, lanes[3]),
+    Car(playerSelections, lanes[4]),
+    Car(playerSelections, lanes[5]),
+    Car(playerSelections, lanes[6]),
 ]
 for car in cars:
     car.pick(player)
@@ -92,13 +92,12 @@ while running:
     trackRender(screen)
 
     player.render(screen)
-    
+
     for i in range(len(cars)):
         car = cars[i]
         if car.notOffScreen:
             car.update()
             car.render(screen)
-
 
     pygame.display.flip()
     clock.tick(fps)
