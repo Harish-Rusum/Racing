@@ -16,6 +16,7 @@ running = True
 pressed = False
 
 screen = pygame.display.set_mode((screenWidth, screenHeight))
+display = pygame.surface.Surface((screenWidth, screenHeight))
 pygame.display.set_caption("Racing")
 
 from scripts.enemy import Car
@@ -29,8 +30,8 @@ from utils.CenteringEngine import centerImageX
 
 def renderCenterdText(text, size, yOffset=0):
     textSurf = textRender(text, (0, 0, 0), size)
-    textX, textY = centerImageX(textSurf, screen, yOffset)
-    screen.blit(textSurf, (textX, textY))
+    textX, textY = centerImageX(textSurf, display, yOffset)
+    display.blit(textSurf, (textX, textY))
 
 
 def handleEvents():
@@ -91,12 +92,14 @@ highScore = 0
 crash = pygame.mixer.Sound("assets/audio/hit.wav")
 track = pygame.mixer.Sound("assets/audio/track.mp3")
 track.play(-1)
-
+xOffset, yOffset = 0, 0
+screenShake = False
 plaque = pygame.image.load("assets/tiles/plaque.png")
+cooldownTimer = 30
 
 
 def menu():
-    global time, running
+    global time, running, xOffset, yOffset, screenShake
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -106,34 +109,36 @@ def menu():
                     return
             if event.type == pygame.QUIT:
                 sys.exit()
-        screen.fill((0, 0, 0))
-        backgroundRender(screen)
-        trackRender(screen)
-        screen.blit(plaque, (0, 0))
+        display.fill((0, 0, 0))
+        backgroundRender(display)
+        trackRender(display)
+        display.blit(plaque, (0, 0))
 
         renderCenterdText("press any key", 30, 25)
-        player.render(screen)
+        player.render(display)
+
+        screen.blit(display, (0 + xOffset, 0 + yOffset))
 
         pygame.display.flip()
         clock.tick(fps)
 
 
 def main():
-    global time, score, cars, running, highScore
+    global time, score, cars, running, highScore, xOffset, yOffset, screenShake, cooldownTimer
     while running:
         handleEvents()
 
-        screen.fill((0, 0, 0))
-        backgroundRender(screen)
-        trackRender(screen)
+        display.fill((0, 0, 0))
+        backgroundRender(display)
+        trackRender(display)
 
         cars = [car for car in cars if car.notOffScreen]
         for car in cars:
             if car.notOffScreen:
                 car.update()
-                car.render(screen)
+                car.render(display)
 
-        player.render(screen)
+        player.render(display)
 
         if time % spawnRate == 0:
             for lane in lanes:
@@ -147,16 +152,27 @@ def main():
             if car.rect.colliderect(player.rect):
                 if not car.collidedWith:
                     crash.play()
+                    car.notOffScreen = False
                     score -= 2
                     car.collidedWith = True
+                    screenShake = True
             else:
                 car.collidedWith = False
-
+        if screenShake:
+            cooldownTimer -= 1
+        if cooldownTimer <= 0:
+            screenShake = False
+            cooldownTimer = 30
         if score < 0:
             return
-        screen.blit(plaque, (0, 0))
+        display.blit(plaque, (0, 0))
         if score >= 0:
             renderCenterdText(str(score), 40, 25)
+
+        if screenShake:
+            xOffset = random.randint(0, 8) - 4
+            yOffset = random.randint(0, 8) - 4
+        screen.blit(display, (0 + xOffset, 0 + yOffset))
 
         time = (time + 1) % 1000000
         pygame.display.flip()
@@ -164,7 +180,7 @@ def main():
 
 
 def endScreen():
-    global time, running, highScore
+    global time, running, highScore, xOffset, yOffset
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -172,10 +188,11 @@ def endScreen():
                     sys.exit()
             if event.type == pygame.QUIT:
                 sys.exit()
-        screen.fill((0, 0, 0))
-        backgroundRender(screen)
-        screen.blit(plaque, (0, 250))
+        display.fill((0, 0, 0))
+        backgroundRender(display)
+        display.blit(plaque, (0, 250))
         renderCenterdText(f"highScore : {highScore}", 30, 280)
+        screen.blit(display, (0 + xOffset, 0 + yOffset))
         pygame.display.flip()
         clock.tick(fps)
 
