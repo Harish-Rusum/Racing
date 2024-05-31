@@ -105,7 +105,7 @@ def menu():
         screen.fill((0, 0, 0))
         backgroundRender(screen)
         trackRender(screen)
-        screen.blit(plaque,(0,0))
+        screen.blit(plaque, (0, 0))
 
         renderCenterdText("press any key", 30, 25)
         player.render(screen)
@@ -149,7 +149,7 @@ def main():
 
         if score < 0:
             print(highScore)
-            running = False
+            return 
         screen.blit(plaque, (0, 0))
         if score >= 0:
             renderCenterdText(str(score), 40, 25)
@@ -159,7 +159,25 @@ def main():
         clock.tick(fps)
 
 
+def endScreen():
+    global time, running,highScore
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit()
+            if event.type == pygame.QUIT:
+                sys.exit()
+        screen.fill((0, 0, 0))
+        backgroundRender(screen)
+        screen.blit(plaque, (0, 250))
+        renderCenterdText(f"highScore : {highScore}",30,280)
+        pygame.display.flip()
+        clock.tick(fps)
+
+
 menu()
 main()
+endScreen()
 pygame.quit()
 sys.exit()
