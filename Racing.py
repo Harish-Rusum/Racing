@@ -149,7 +149,7 @@ def main():
 
         if score < 0:
             print(highScore)
-            return 
+            return
         screen.blit(plaque, (0, 0))
         if score >= 0:
             renderCenterdText(str(score), 40, 25)
@@ -160,7 +160,7 @@ def main():
 
 
 def endScreen():
-    global time, running,highScore
+    global time, running, highScore
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -171,7 +171,7 @@ def endScreen():
         screen.fill((0, 0, 0))
         backgroundRender(screen)
         screen.blit(plaque, (0, 250))
-        renderCenterdText(f"highScore : {highScore}",30,280)
+        renderCenterdText(f"highScore : {highScore}", 30, 280)
         pygame.display.flip()
         clock.tick(fps)
 
