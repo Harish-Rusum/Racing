@@ -6,6 +6,7 @@ from carselect import select
 player, playerSelections = select()
 
 pygame.init()
+pygame.mixer.init()
 
 screenWidth = 600
 screenHeight = 600
@@ -87,6 +88,9 @@ spawnRate = 40
 time = 0
 score = 0
 highScore = 0
+crash = pygame.mixer.Sound("assets/audio/hit.wav")
+track = pygame.mixer.Sound("assets/audio/track.mp3")
+track.play(-1)
 
 plaque = pygame.image.load("assets/tiles/plaque.png")
 
@@ -142,13 +146,13 @@ def main():
         for car in cars:
             if car.rect.colliderect(player.rect):
                 if not car.collidedWith:
+                    crash.play()
                     score -= 2
                     car.collidedWith = True
             else:
                 car.collidedWith = False
 
         if score < 0:
-            print(highScore)
             return
         screen.blit(plaque, (0, 0))
         if score >= 0:
