@@ -91,6 +91,29 @@ highScore = 0
 plaque = pygame.image.load("assets/tiles/plaque.png")
 
 
+def menu():
+    global time, running
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit()
+                else:
+                    return
+            if event.type == pygame.QUIT:
+                sys.exit()
+        screen.fill((0, 0, 0))
+        backgroundRender(screen)
+        trackRender(screen)
+        screen.blit(plaque,(0,0))
+
+        renderCenterdText("press any key", 30, 25)
+        player.render(screen)
+
+        pygame.display.flip()
+        clock.tick(fps)
+
+
 def main():
     global time, score, cars, running, highScore
     while running:
@@ -136,6 +159,7 @@ def main():
         clock.tick(fps)
 
 
+menu()
 main()
 pygame.quit()
 sys.exit()
