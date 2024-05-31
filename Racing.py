@@ -40,7 +40,7 @@ def handleEvents():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
-            elif event.key in (pygame.K_l, pygame.K_d):
+            if event.key in (pygame.K_l, pygame.K_d):
                 if not pressed:
                     player.right()
                     pressed = True
@@ -128,7 +128,8 @@ def main():
             print(highScore)
             running = False
         screen.blit(plaque, (0, 0))
-        renderCenterdText(str(score), 40, 25)
+        if score >= 0:
+            renderCenterdText(str(score), 40, 25)
 
         time = (time + 1) % 1000000
         pygame.display.flip()
