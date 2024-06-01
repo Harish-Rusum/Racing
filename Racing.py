@@ -42,19 +42,19 @@ def handleEvents():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
-            if event.key in (pygame.K_l, pygame.K_d):
+            if event.key in (pygame.K_l, pygame.K_d, pygame.K_RIGHT):
                 if not pressed:
                     player.right()
                     pressed = True
-            elif event.key in (pygame.K_h, pygame.K_a):
+            elif event.key in (pygame.K_h, pygame.K_a, pygame.K_LEFT):
                 if not pressed:
                     player.left()
                     pressed = True
-            elif event.key in (pygame.K_k, pygame.K_w):
+            elif event.key in (pygame.K_k, pygame.K_w, pygame.K_UP):
                 if not pressed:
                     player.up()
                     pressed = True
-            elif event.key in (pygame.K_j, pygame.K_s):
+            elif event.key in (pygame.K_j, pygame.K_s, pygame.K_DOWN):
                 if not pressed:
                     player.down()
                     pressed = True
@@ -68,6 +68,10 @@ def handleEvents():
                 pygame.K_w,
                 pygame.K_k,
                 pygame.K_s,
+                pygame.K_DOWN,
+                pygame.K_UP,
+                pygame.K_RIGHT,
+                pygame.K_LEFT,
             ):
                 pressed = False
 
