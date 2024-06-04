@@ -1,12 +1,22 @@
-import pygame
 import random
 import sys
+
+import pygame
+
 from carselect import select
 
 player, playerSelections = select()
 
 pygame.init()
 pygame.mixer.init()
+
+
+
+
+
+
+
+
 
 screenWidth = 600
 screenHeight = 600
@@ -21,11 +31,9 @@ pygame.display.set_caption("Racing")
 
 from scripts.enemy import Car
 from scripts.lane import Lane
-from scripts.tiles import backgroundRender
-from scripts.tiles import trackRender
-
-from utils.TextEngine import textRender
+from scripts.tiles import backgroundRender, trackRender
 from utils.CenteringEngine import centerImageX
+from utils.TextEngine import textRender
 
 
 def renderCenterdText(text, size, yOffset=0):
@@ -88,6 +96,7 @@ lanes = [
     Lane(460),
 ]
 
+
 cars = []
 spawnRate = 40
 time = 0
@@ -103,7 +112,6 @@ cooldownTimer = 30
 
 
 def menu():
-    global time, running, xOffset, yOffset, screenShake
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
