@@ -10,14 +10,6 @@ player, playerSelections = select()
 pygame.init()
 pygame.mixer.init()
 
-
-
-
-
-
-
-
-
 screenWidth = 600
 screenHeight = 600
 clock = pygame.time.Clock()
