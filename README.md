@@ -8,6 +8,15 @@ A racing game written in python (pygame, a wrapper for SDL2)
 
 # How To Play
 
-- Donwload the code by running ```git clone https://github.com/Harish-Rusum/Racing```
-- This will create a new folder called Racing
-- Go to this folder and double click on the Racing.py
+- Open windows powershell and run this :
+```
+# setting up what is required to play the game (scoop -> package manager,python,pygame -> python package)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+scoop install python3
+pip install pygame
+
+# play the game
+py Racing.py
+```
+
