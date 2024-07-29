@@ -157,7 +157,7 @@ def main():
                 if not car.collidedWith:
                     crash.play()
                     car.notOffScreen = False
-                    score -= 2
+                    score -= 4
                     car.collidedWith = True
                     screenShake = True
             else:

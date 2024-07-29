@@ -3,7 +3,7 @@ import pygame
 
 def backgroundRender(surface):
     tiles = pygame.transform.scale(
-        pygame.image.load("assets/Tiles/grass.png").convert_alpha(), (40, 40)
+        pygame.image.load("assets/tiles/grass.png").convert_alpha(), (40, 40)
     )
     for i in range(15):
         x = i * 40
@@ -15,11 +15,11 @@ def backgroundRender(surface):
 def trackRender(surface):
     offsetX = 90
     tiles1 = pygame.transform.scale(
-        pygame.image.load("assets/Tiles/asphalt1.png").convert_alpha(), (60, 60)
+        pygame.image.load("assets/tiles/asphalt1.png").convert_alpha(), (60, 60)
     )
 
     tiles2 = pygame.transform.scale(
-        pygame.image.load("assets/Tiles/asphalt2.png").convert_alpha(), (60, 60)
+        pygame.image.load("assets/tiles/asphalt2.png").convert_alpha(), (60, 60)
     )
 
     for i in range(7):
